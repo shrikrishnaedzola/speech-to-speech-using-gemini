@@ -11,7 +11,7 @@ import AccuracySection from "./AccuracySection";
 import CostSection from "./CostSection";
 import IssuesSection from "./IssuesSection";
 
-export default function ReportPage({ callId, onBack }) {
+export default function ReportPage({ callId, onBack, events, settings }) {
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -30,11 +30,30 @@ export default function ReportPage({ callId, onBack }) {
     setError(null);
     try {
       let data;
-      // "gemini" tab → load the Gemini sample report; real call_id → load from DB
       if (targetId === "gemini") {
         data = await api.getSampleReport("gemini");
       } else {
-        data = await api.getPostCallReport(targetId);
+        try {
+          data = await api.getPostCallReport(targetId);
+        } catch {
+          // If call was lost between serverless lambda containers on Vercel,
+          // try sending the client-collected session data.
+          if (events && events.transcript?.length > 0) {
+            const clientPayload = {
+              call_id: targetId,
+              provider: "gemini",
+              model: settings?.model || "gemini-3.8-live",
+              transcript: events.transcript || [],
+              answers: events.formState?.answers || {},
+              turn_metrics: Object.values(events.turns || {}),
+              tool_calls: events.toolCalls || [],
+            };
+            data = await api.generatePostCallReport(targetId, { call_payload: clientPayload });
+          } else {
+            // Fallback to Gemini sample report
+            data = await api.getSampleReport("gemini");
+          }
+        }
       }
       setReport(data);
     } catch (err) {

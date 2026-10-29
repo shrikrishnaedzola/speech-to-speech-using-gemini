@@ -104,7 +104,7 @@ export default function App() {
     return (
       <div className="min-h-screen">
         <TestModeBanner apiKeyConfigured={options?.api_key_configured} />
-        <ReportPage callId={callId} onBack={closeReport} />
+        <ReportPage callId={callId} onBack={closeReport} events={events} settings={settings} />
       </div>
     );
   }

@@ -19,14 +19,21 @@ from app.services.gemini_live import end_all
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    init_db()
-    with SessionLocal() as db:
-        count = load_seed_forms(db)
-    logger.info(f"Loaded {count} form(s) from seed_forms/")
+    try:
+        init_db()
+        with SessionLocal() as db:
+            count = load_seed_forms(db)
+        logger.info(f"Loaded {count} form(s) from seed_forms/")
+    except Exception as e:
+        logger.error(f"Error during DB initialization: {e}")
+
     if not has_api_key():
         logger.warning("GEMINI_API_KEY is not set: live calls are disabled, Simulate mode still works.")
     yield
-    await end_all()
+    try:
+        await end_all()
+    except Exception:
+        pass
 
 
 app = FastAPI(title="Zolabs Voice Form Tester - Gemini 3.8 Live", lifespan=lifespan)

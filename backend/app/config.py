@@ -12,6 +12,7 @@ Model IDs, audio formats, voices and prices come from ai.google.dev (checked Oct
 """
 
 import os
+import tempfile
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -20,7 +21,20 @@ BACKEND_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BACKEND_DIR / ".env")
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{BACKEND_DIR / 'data' / 'tester.db'}")
+
+# In serverless environments (e.g. Vercel), the function filesystem is read-only.
+# Only /tmp is writable. Fallback to tempdir when running on Vercel or in read-only environment.
+if os.getenv("VERCEL") or not os.access(str(BACKEND_DIR), os.W_OK):
+    default_db = f"sqlite:///{Path(tempfile.gettempdir()) / 'tester.db'}"
+else:
+    default_db = f"sqlite:///{BACKEND_DIR / 'data' / 'tester.db'}"
+
+DATABASE_URL = os.getenv("DATABASE_URL", default_db)
+
+# On Vercel, serverless lambdas run in a read-only filesystem where only /tmp is writable.
+# If any SQLite URL is provided, force it to use /tmp/tester.db on Vercel.
+if os.getenv("VERCEL") and DATABASE_URL.startswith("sqlite:///"):
+    DATABASE_URL = f"sqlite:///{Path(tempfile.gettempdir()) / 'tester.db'}"
 CORS_ORIGINS = [o.strip() for o in os.getenv("CORS_ORIGINS", "http://localhost:5190").split(",")]
 
 SEED_FORMS_DIR = BACKEND_DIR / "app" / "seed_forms"

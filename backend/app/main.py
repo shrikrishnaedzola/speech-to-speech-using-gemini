@@ -12,7 +12,7 @@ from loguru import logger
 
 from app.config import CORS_ORIGINS, has_api_key
 from app.db import SessionLocal, init_db
-from app.routers import calls, forms, session, tools
+from app.routers import calls, forms, reports, session, tools
 from app.services.forms_loader import load_seed_forms
 from app.services.gemini_live import end_all
 
@@ -32,8 +32,9 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Zolabs Voice Form Tester - Gemini 3.8 Live", lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=CORS_ORIGINS, allow_methods=["*"], allow_headers=["*"])
 
-for module in (forms, session, tools, calls):
+for module in (forms, session, tools, calls, reports):
     app.include_router(module.router)
+
 
 
 @app.get("/api/health")

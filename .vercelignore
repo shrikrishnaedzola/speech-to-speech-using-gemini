@@ -1,0 +1,12 @@
+# Files Vercel should NOT upload when deploying.
+backend/.venv
+backend/__pycache__
+backend/**/__pycache__
+**/*.pyc
+**/*.pyo
+**/*.pyd
+frontend/node_modules
+.git
+*.db
+*.sqlite
+

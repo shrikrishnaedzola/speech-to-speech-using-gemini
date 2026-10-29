@@ -6,6 +6,7 @@ import TestModeBanner from "./components/TestModeBanner";
 import CallPanel from "./components/CallPanel";
 import FormPanel from "./components/FormPanel";
 import MetricsPanel from "./components/MetricsPanel";
+import ReportPage from "./components/report/ReportPage";
 
 export default function App() {
   const [options, setOptions] = useState(null);
@@ -17,6 +18,8 @@ export default function App() {
   const [mode, setMode] = useState(null); // "live" | "simulate"
   const [localError, setLocalError] = useState(null);
   const [starting, setStarting] = useState(false);
+  // showReport: false = main tester UI, true = post-call report page
+  const [showReport, setShowReport] = useState(false);
 
   const events = useCallEvents(callId);
   const voice = useLiveCall();
@@ -72,6 +75,16 @@ export default function App() {
     if (mode === "live" && callId) await api.endSession(callId).catch(() => {});
   }
 
+  // Called from the "View Report" button — switches to the report page.
+  function openReport() {
+    setShowReport(true);
+  }
+
+  // Called from "← Back" in ReportPage — return to the tester.
+  function closeReport() {
+    setShowReport(false);
+  }
+
   if (!options || !settings) {
     return (
       <div className="min-h-screen">
@@ -84,6 +97,17 @@ export default function App() {
   // The browser's own WebSocket reconnecting shows as "Reconnecting" too.
   let status = starting ? "connecting" : callId ? events.status : "idle";
   if (mode === "live" && active && voice.socketState === "reconnecting") status = "reconnecting";
+
+  // ── Report page ─────────────────────────────────────────────────────────────
+  // When showReport is true, replace the whole main layout with the report.
+  if (showReport) {
+    return (
+      <div className="min-h-screen">
+        <TestModeBanner apiKeyConfigured={options?.api_key_configured} />
+        <ReportPage callId={callId} onBack={closeReport} />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">
@@ -116,6 +140,8 @@ export default function App() {
           transcript={events.transcript}
           partial={events.partial}
           localError={localError}
+          callEnded={Boolean(callId) && events.ended}
+          onViewReport={openReport}
         />
         <FormPanel callId={callId} formState={events.formState} report={events.report} />
         <MetricsPanel events={events} report={events.report} settings={settings} active={active} />

@@ -31,7 +31,19 @@ export const api = {
     request(`/api/calls/${callId}/review`, { method: "POST", body: JSON.stringify({ reviews }) }),
   exportUrl: (callId, format, section = "fields") =>
     `/api/calls/${callId}/export?format=${format}&section=${section}`,
+
+  // Post-Call Report Module API
+  getPostCallReport: (callId) => request(`/api/calls/${callId}/report`),
+  generatePostCallReport: (callId, body = {}) =>
+    request(`/api/calls/${callId}/report`, { method: "POST", body: JSON.stringify(body) }),
+  saveRatings: (callId, ratings) =>
+    request(`/api/calls/${callId}/ratings`, { method: "POST", body: JSON.stringify(ratings) }),
+  getPostCallExportUrl: (callId, format = "json") =>
+    `/api/calls/${callId}/report/export?format=${format}`,
+  getSampleReports: () => request("/api/sample-reports"),
+  getSampleReport: (provider) => request(`/api/sample-reports/${provider}`),
 };
+
 
 function wsUrl(path) {
   const proto = window.location.protocol === "https:" ? "wss" : "ws";

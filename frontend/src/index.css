@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+/* Response-time bars: one series, so one color (the validated blue step used by
+   the Sarvam tester). Dark mode uses its own step, not an automatic flip. */
+:root {
+  --bar-response: #2a78d6;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bar-response: #3987e5;
+  }
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100;
+}

@@ -1,0 +1,361 @@
+{
+ "description": "Dummy Hinglish call for UI testing. All data is made up. Includes a rejected answer (re-asked via INTERRUPT), a malformed tool call, a barge-in, a dropped connection, and a correction.",
+ "form_id": "program_feedback_survey_test",
+ "steps": [
+  {
+   "type": "agent",
+   "text": "Namaste! Main ek NGO program ki taraf se bol rahi hoon. Yeh call lagbhag teen minute ki hogi. Kya abhi baat karne ka sahi samay hai?",
+   "response_ms": null
+  },
+  {
+   "type": "caller",
+   "text": "Haan ji, boliye.",
+   "language": "hi-IN"
+  },
+  {
+   "type": "agent",
+   "text": "Dhanyavaad. Aapka naam kya hai?",
+   "response_ms": 554
+  },
+  {
+   "type": "caller",
+   "text": "Mera naam Test User hai.",
+   "language": "hi-IN"
+  },
+  {
+   "type": "tool",
+   "name": "save_answer",
+   "args": {
+    "field_id": "caller_name",
+    "value": "Test User",
+    "confidence": "high"
+   },
+   "agent_speaking": true
+  },
+  {
+   "type": "agent",
+   "text": "Shukriya Test User ji. Aapki umar kya hai?",
+   "response_ms": 802,
+   "tool_ms": 12
+  },
+  {
+   "type": "caller",
+   "text": "Ek sau pachaas saal.",
+   "language": "hi-IN"
+  },
+  {
+   "type": "tool",
+   "name": "save_answer",
+   "args": {
+    "field_id": "age",
+    "value": "150",
+    "confidence": "high"
+   },
+   "agent_speaking": false
+  },
+  {
+   "type": "agent",
+   "text": "Maaf kijiye, kya aap apni umar dobara bata sakte hain?",
+   "response_ms": 826,
+   "tool_ms": 9
+  },
+  {
+   "type": "caller",
+   "text": "Paintees saal.",
+   "language": "hi-IN"
+  },
+  {
+   "type": "tool",
+   "name": "save_answer",
+   "args": {
+    "field_id": "age",
+    "value": "paintees",
+    "confidence": "high"
+   },
+   "agent_speaking": true
+  },
+  {
+   "type": "agent",
+   "text": "Theek hai. Aap kis district mein rehte hain?",
+   "response_ms": 770,
+   "tool_ms": 10
+  },
+  {
+   "type": "reconnect",
+   "ms": 900
+  },
+  {
+   "type": "caller",
+   "text": "Sample district.",
+   "language": "en-IN"
+  },
+  {
+   "type": "tool",
+   "name": "save_answer",
+   "raw_args": "{\"field_id\": \"district\", \"value\": \"Sample district\" \"confidence\": \"high\"}",
+   "agent_speaking": true
+  },
+  {
+   "type": "tool",
+   "name": "save_answer",
+   "args": {
+    "field_id": "district",
+    "value": "Sample district",
+    "confidence": "high"
+   },
+   "agent_speaking": true
+  },
+  {
+   "type": "agent",
+   "text": "Program sessions ke liye aap kaunsi bhasha pasand karte hain?",
+   "response_ms": 1194,
+   "tool_ms": 21
+  },
+  {
+   "type": "caller",
+   "text": "Hindi.",
+   "language": "hi-IN"
+  },
+  {
+   "type": "tool",
+   "name": "save_answer",
+   "args": {
+    "field_id": "preferred_language",
+    "value": "Hindi",
+    "confidence": "high"
+   },
+   "agent_speaking": true
+  },
+  {
+   "type": "agent",
+   "text": "Kya aapne program ke koi session attend kiye?",
+   "response_ms": 730,
+   "tool_ms": 8
+  },
+  {
+   "type": "caller",
+   "text": "Haan, kiye the.",
+   "language": "hi-IN"
+  },
+  {
+   "type": "tool",
+   "name": "save_answer",
+   "args": {
+    "field_id": "attended_sessions",
+    "value": "haan",
+    "confidence": "high"
+   },
+   "agent_speaking": true
+  },
+  {
+   "type": "agent",
+   "text": "Achha. Aapne kitne sessions attend kiye? Aur kya aap",
+   "interrupted": true,
+   "response_ms": 762,
+   "tool_ms": 9
+  },
+  {
+   "type": "interruption"
+  },
+  {
+   "type": "caller",
+   "text": "Teen sessions.",
+   "language": "hi-IN"
+  },
+  {
+   "type": "tool",
+   "name": "save_answer",
+   "args": {
+    "field_id": "sessions_attended_count",
+    "value": "3",
+    "confidence": "high"
+   },
+   "agent_speaking": true
+  },
+  {
+   "type": "agent",
+   "text": "Aapke kitne bachche hain?",
+   "response_ms": 738,
+   "tool_ms": 9
+  },
+  {
+   "type": "caller",
+   "text": "Do bachche.",
+   "language": "hi-IN"
+  },
+  {
+   "type": "tool",
+   "name": "save_answer",
+   "args": {
+    "field_id": "number_of_children",
+    "value": "2",
+    "confidence": "high"
+   },
+   "agent_speaking": true
+  },
+  {
+   "type": "agent",
+   "text": "Unki umar kya hai?",
+   "response_ms": 722,
+   "tool_ms": 8
+  },
+  {
+   "type": "caller",
+   "text": "Paanch aur aath saal.",
+   "language": "hi-IN"
+  },
+  {
+   "type": "tool",
+   "name": "save_answer",
+   "args": {
+    "field_id": "children_ages",
+    "value": "5, 8",
+    "confidence": "high"
+   },
+   "agent_speaking": true
+  },
+  {
+   "type": "agent",
+   "text": "Ek se paanch ke scale par, aap program se kitne santusht hain?",
+   "response_ms": 778,
+   "tool_ms": 10
+  },
+  {
+   "type": "caller",
+   "text": "Char.",
+   "language": "hi-IN"
+  },
+  {
+   "type": "tool",
+   "name": "save_answer",
+   "args": {
+    "field_id": "satisfaction_rating",
+    "value": "4",
+    "confidence": "low"
+   },
+   "agent_speaking": true
+  },
+  {
+   "type": "agent",
+   "text": "Kya aapne char kaha? Bas confirm kar rahi hoon.",
+   "response_ms": 754,
+   "tool_ms": 9
+  },
+  {
+   "type": "caller",
+   "text": "Haan, char.",
+   "language": "hi-IN"
+  },
+  {
+   "type": "tool",
+   "name": "save_answer",
+   "args": {
+    "field_id": "satisfaction_rating",
+    "value": "4",
+    "confidence": "high"
+   },
+   "agent_speaking": true
+  },
+  {
+   "type": "agent",
+   "text": "Program ko behtar banane ke liye koi sujhav?",
+   "response_ms": 730,
+   "tool_ms": 9
+  },
+  {
+   "type": "caller",
+   "text": "Nahi, kuch nahi.",
+   "language": "hi-IN"
+  },
+  {
+   "type": "tool",
+   "name": "skip_field",
+   "args": {
+    "field_id": "improvement_suggestion",
+    "reason": "Caller had no suggestion"
+   },
+   "agent_speaking": false
+  },
+  {
+   "type": "tool",
+   "name": "complete_form",
+   "args": {},
+   "agent_speaking": false
+  },
+  {
+   "type": "agent",
+   "text": "Kya hum aapse baad mein ek chhote follow-up ke liye sampark kar sakte hain?",
+   "response_ms": 1034,
+   "tool_ms": 19
+  },
+  {
+   "type": "caller",
+   "text": "Haan, theek hai. Aur ek baat, mere teen bachche hain, do nahi.",
+   "language": "hi-IN"
+  },
+  {
+   "type": "tool",
+   "name": "save_answer",
+   "args": {
+    "field_id": "consent_to_followup",
+    "value": "yes",
+    "confidence": "high"
+   },
+   "agent_speaking": true
+  },
+  {
+   "type": "tool",
+   "name": "save_answer",
+   "args": {
+    "field_id": "number_of_children",
+    "value": "teen",
+    "confidence": "high"
+   },
+   "agent_speaking": true
+  },
+  {
+   "type": "agent",
+   "text": "Theek hai, maine teen bachche update kar diya. Teesre bachche ki umar kya hai? Kripya teeno ki umar bataiye.",
+   "response_ms": 1250,
+   "tool_ms": 22
+  },
+  {
+   "type": "caller",
+   "text": "Paanch, aath aur do saal.",
+   "language": "hi-IN"
+  },
+  {
+   "type": "tool",
+   "name": "save_answer",
+   "args": {
+    "field_id": "children_ages",
+    "value": "5, 8, 2",
+    "confidence": "high"
+   },
+   "agent_speaking": true
+  },
+  {
+   "type": "agent",
+   "text": "Dhanyavaad. Main confirm kar leti hoon: naam Test User, umar paintees, Sample district, teen sessions, teen bachche, rating char, aur follow-up ke liye haan. Kya yeh sahi hai?",
+   "response_ms": 810,
+   "tool_ms": 10
+  },
+  {
+   "type": "caller",
+   "text": "Haan, sab sahi hai.",
+   "language": "hi-IN"
+  },
+  {
+   "type": "tool",
+   "name": "complete_form",
+   "args": {},
+   "agent_speaking": false
+  },
+  {
+   "type": "agent",
+   "text": "Aapke samay ke liye bahut dhanyavaad. Aapka din shubh ho!",
+   "response_ms": 802,
+   "tool_ms": 11
+  }
+ ]
+}

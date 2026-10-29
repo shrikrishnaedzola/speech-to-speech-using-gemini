@@ -1,0 +1,83 @@
+{
+  "call_id": "call-gemini-test-001",
+  "provider": "gemini",
+  "model": "gemini-2.5-flash",
+  "voice": "Puck",
+  "language": "English",
+  "audio_mode": "Normal (16 kHz)",
+  "started_at": "2026-10-29T10:15:00Z",
+  "ended_at": "2026-10-29T10:16:45Z",
+  "duration_seconds": 105.0,
+  "form_completed": true,
+  "interruptions": 1,
+  "audio_input_tokens": 8200,
+  "audio_output_tokens": 14500,
+  "text_input_tokens": 1200,
+  "text_output_tokens": 450,
+  "settings": {
+    "provider": "gemini",
+    "model": "gemini-2.5-flash",
+    "voice": "Puck",
+    "language": "English"
+  },
+  "form_definition": {
+    "id": "address_change",
+    "name": "Customer Address Change Form",
+    "fields": [
+      { "id": "customer_name", "label": "Full Name", "required": true },
+      { "id": "phone_number", "label": "Contact Number", "required": true },
+      { "id": "pincode", "label": "6-digit PIN Code", "required": true },
+      { "id": "city", "label": "City", "required": true },
+      { "id": "flat_no", "label": "Flat / House Number", "required": false }
+    ]
+  },
+  "transcript": [
+    { "role": "agent", "text": "Hello, thank you for calling EdZola support. May I have your full name please?", "time": "00:03", "language": "en" },
+    { "role": "caller", "text": "Hi, my name is Rahul Sharma.", "time": "00:08", "language": "en" },
+    { "role": "agent", "text": "Thanks Rahul. What is your 10-digit mobile number?", "time": "00:13", "language": "en" },
+    { "role": "caller", "text": "My phone number is 9876543210.", "time": "00:19", "language": "en" },
+    { "role": "agent", "text": "Got it. And what is your new 6-digit postal PIN code?", "time": "00:25", "language": "en" },
+    { "role": "caller", "text": "It is 560034.", "time": "00:30", "language": "en" },
+    { "role": "agent", "text": "Thank you. Did you say 560034, Bangalore?", "time": "00:36", "language": "en" },
+    { "role": "caller", "text": "Yes, exactly, Bangalore.", "time": "00:41", "language": "en" },
+    { "role": "agent", "text": "And finally, what is your house or flat number?", "time": "00:48", "language": "en" },
+    { "role": "caller", "text": "Flat number 15, B block.", "time": "00:54", "language": "en" },
+    { "role": "agent", "text": "I have saved flat 50 for you.", "time": "01:00", "language": "en" },
+    { "role": "caller", "text": "No, I said flat 15, one-five, not fifty.", "time": "01:06", "language": "en", "is_correction": true, "interrupted": true },
+    { "role": "agent", "text": "Apologies for that! Corrected to flat 15. Your address change request is submitted.", "time": "01:14", "language": "en" }
+  ],
+  "answers": [
+    { "field_id": "customer_name", "value": "Rahul Sharma", "raw_value": "Rahul Sharma", "status": "filled", "attempts": 1 },
+    { "field_id": "phone_number", "value": "9876543210", "raw_value": "9876543210", "status": "filled", "attempts": 1 },
+    { "field_id": "pincode", "value": "560034", "raw_value": "560034", "status": "filled", "attempts": 1 },
+    { "field_id": "city", "value": "Bangalore", "raw_value": "Bangalore", "status": "filled", "attempts": 1 },
+    { "field_id": "flat_no", "value": "15", "raw_value": "50", "status": "filled", "attempts": 2, "note": "Corrected after caller clarification" }
+  ],
+  "reviews": [
+    { "field_id": "customer_name", "verdict": "correct", "expected_value": "Rahul Sharma" },
+    { "field_id": "phone_number", "verdict": "correct", "expected_value": "9876543210" },
+    { "field_id": "pincode", "verdict": "correct", "expected_value": "560034" },
+    { "field_id": "city", "verdict": "correct", "expected_value": "Bangalore" },
+    { "field_id": "flat_no", "verdict": "correct", "expected_value": "15" }
+  ],
+  "turn_metrics": [
+    { "turn_index": 1, "total_ms": 680, "tool_ms": 0, "user_text": "Hi, my name is Rahul Sharma.", "agent_text": "Thanks Rahul. What is your 10-digit mobile number?" },
+    { "turn_index": 2, "total_ms": 720, "tool_ms": 0, "user_text": "My phone number is 9876543210.", "agent_text": "Got it. And what is your new 6-digit postal PIN code?" },
+    { "turn_index": 3, "total_ms": 840, "tool_ms": 110, "user_text": "It is 560034.", "agent_text": "Thank you. Did you say 560034, Bangalore?" },
+    { "turn_index": 4, "total_ms": 610, "tool_ms": 0, "user_text": "Yes, exactly, Bangalore.", "agent_text": "And finally, what is your house or flat number?" },
+    { "turn_index": 5, "total_ms": 790, "tool_ms": 0, "user_text": "Flat number 15, B block.", "agent_text": "I have saved flat 50 for you." },
+    { "turn_index": 6, "total_ms": 910, "tool_ms": 95, "interrupted": true, "user_text": "No, I said flat 15, one-five, not fifty.", "agent_text": "Apologies for that! Corrected to flat 15." }
+  ],
+  "tool_calls": [
+    { "name": "lookup_pincode", "arguments": { "pincode": "560034" }, "success": true, "duration_ms": 110 },
+    { "name": "save_form_field", "arguments": { "field": "flat_no", "value": "15" }, "success": true, "duration_ms": 95 }
+  ],
+  "human_ratings": {
+    "naturalness": 4.5,
+    "clarity": 4.0,
+    "pronunciation": 4.5,
+    "accent_fit": 4.0,
+    "politeness": 5.0,
+    "code_mixing": 4
+  }
+}
